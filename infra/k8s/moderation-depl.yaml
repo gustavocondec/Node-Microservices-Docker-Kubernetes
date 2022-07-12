@@ -1,34 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts-depl
+  name: moderation-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: posts
+      app: moderation
   template:
     metadata:
       labels:
-        app: posts
+        app: moderation
     spec:
       containers:
-        - name: posts
-          image: gustavocondezo/micro-posts
----
+        - name: moderation
+          image: gustavocondezo/micro-moderation
+
+#Para agregar otro objecto de kubernets con triple guion (sino puede ser otro archivo)
+#agregamos un despliegue de tipo servicio
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-clusterip-srv
+  name: moderation-srv
 spec:
   selector:
-    app: posts
+    app: moderation
   type: ClusterIP #Si no se pone sera x defecto ClusterIP
   #ClusterIP PERMITE QUE SE CONECTEN ENTRE PODS
   #NodePort permite que el puerto este disponible fuera
   ports:
-    - name: posts
+    - name: moderation
       protocol: TCP
-      port: 4000
-      targetPort: 4000
+      port: 4003
+      targetPort: 4003
