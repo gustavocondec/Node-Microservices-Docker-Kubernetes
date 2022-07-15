@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - name: client
+          image: gustavocondezo/micro-client
+
+#Para agregar otro objecto de kubernets con triple guion (sino puede ser otro archivo)
+#agregamos un despliegue de tipo servicio
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-srv
+spec:
+  selector:
+    app: client
+  type: ClusterIP #Si no se pone sera x defecto ClusterIP
+  #ClusterIP PERMITE QUE SE CONECTEN ENTRE PODS
+  #NodePort permite que el puerto este disponible fuera
+  ports:
+    - name: client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
