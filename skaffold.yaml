@@ -1,0 +1,58 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts: #hacemos que skaffold este pendiente de los cambios de los *.js y actualize los contenedores
+    - image: gustavocondezo/micro-client
+      context: client #indicar que un pod esta ejecutando codigo de esta carpeta
+      docker:
+        dockerfile: Dockerfile
+      sync: #Si detecta cambios en la carpeta (.js)  entonces los copia al pod. En caso cambien otros archivos como pakage reconstruira
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: gustavocondezo/micro-comments
+      context: comments #indicar que un pod esta ejecutando codigo de esta carpeta
+      docker:
+        dockerfile: Dockerfile
+      sync: #Si detecta cambios en la carpeta (.js)  entonces los copia al pod. En caso cambien otros archivos como pakage reconstruira
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: gustavocondezo/micro-event-bus
+      context: event-bus #indicar que un pod esta ejecutando codigo de esta carpeta
+      docker:
+        dockerfile: Dockerfile
+      sync: #Si detecta cambios en la carpeta (.js)  entonces los copia al pod. En caso cambien otros archivos como pakage reconstruira
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: gustavocondezo/micro-moderation
+      context: moderation #indicar que un pod esta ejecutando codigo de esta carpeta
+      docker:
+        dockerfile: Dockerfile
+      sync: #Si detecta cambios en la carpeta (.js)  entonces los copia al pod. En caso cambien otros archivos como pakage reconstruira
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: gustavocondezo/micro-posts
+      context: posts #indicar que un pod esta ejecutando codigo de esta carpeta
+      docker:
+        dockerfile: Dockerfile
+      sync: #Si detecta cambios en la carpeta (.js)  entonces los copia al pod. En caso cambien otros archivos como pakage reconstruira
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: gustavocondezo/micro-query
+      context: query #indicar que un pod esta ejecutando codigo de esta carpeta
+      docker:
+        dockerfile: Dockerfile
+      sync: #Si detecta cambios en la carpeta (.js)  entonces los copia al pod. En caso cambien otros archivos como pakage reconstruira
+        manual:
+          - src: '*.js'
+            dest: .
