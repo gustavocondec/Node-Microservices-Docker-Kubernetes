@@ -15,7 +15,7 @@ spec: # definir comportamiento del deployment
     spec:
       containers:
         - name: posts
-          image: gustavocondezo/micro-posts
+          image: gustavocondezo/posts # recomendable (sin version) toma la ultima version
 #---
 #---
 #apiVersion: v1

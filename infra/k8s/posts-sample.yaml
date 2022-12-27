@@ -1,0 +1,9 @@
+# Crea un nuevo pod, de nombre posts (metadata.name)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: posts # nombre de pod
+spec:
+  containers:
+    - name: posts # nombre del contenedor (dentro del pod)
+      image: gustavocondezo/posts:0.0.1
