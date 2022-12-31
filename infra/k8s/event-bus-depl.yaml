@@ -4,17 +4,17 @@ metadata:
   name: event-bus-depl
 spec:
   replicas: 1
-  selector:
+  selector: #selector de que pods gestionara
     matchLabels:
       app: event-bus
-  template:
+  template: #template de cada pod que creara
     metadata:
       labels:
-        app: event-bus
+        app: event-bus #agrega una etiqueta para saber que sera gestionado por este depl
     spec:
       containers:
         - name: event-bus
-          image: gustavocondezo/micro-event-bus
+          image: gustavocondezo/event-bus
 
 #Para agregar otro objecto de kubernets con triple guion (sino puede ser otro archivo)
 #agregamos un despliegue de tipo servicio
@@ -22,10 +22,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: event-bus-srv
+  name: event-bus-srv # nombre del service, se llamara en las llamdas http
 spec:
   selector:
-    app: event-bus
+    app: event-bus #Selector de a que pods afectara este service
   type: ClusterIP #Si no se pone sera x defecto ClusterIP
   #ClusterIP PERMITE QUE SE CONECTEN ENTRE PODS
   #NodePort permite que el puerto este disponible fuera
@@ -33,4 +33,4 @@ spec:
     - name: event-bus
       protocol: TCP
       port: 4005
-      targetPort: 4005
+      targetPort: 4005 #puerto en el cual la aplicacion (o container) escucha

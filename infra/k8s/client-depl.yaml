@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: gustavocondezo/micro-client
+          image: gustavocondezo/client
 
 #Para agregar otro objecto de kubernets con triple guion (sino puede ser otro archivo)
 #agregamos un despliegue de tipo servicio

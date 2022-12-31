@@ -1,13 +1,15 @@
+# Ejemplo de creacion de un servicio de tipo node port (permite exponer un pod para el exterior)
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-srv
-spec:
+  name: posts-srv # nombre del servicio
+spec: # especificacion del servicio
   type: NodePort
-  selector:
+  selector: #El service sera aplicado a los pods que tengan app: posts segun este selector
     app: posts
   ports:
     - name: posts
       protocol: TCP
-      port: 4000
-      targetPort: 4000
+      port: 4000 # El Node Port Service abre este puerto (al exterior) y luego redirige hacia el targetPort. (pueden ser diferentes)
+      targetPort: 4000 # puerto donde nuestra app escucha (dentro del contenedor)
+# adicionalmente se creara un puerto externo aleatorio con ip (localhost) desde donde sera accesible el pod desde el exterior

@@ -1,10 +1,13 @@
+#Ingress Controller (inside cluster)
+# Esto no es load balancer
+# Recibe la peticion del load balancer y segun las reglas las enruta a los ClusterIpr creados
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-srv
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/use-regex: 'true' #Permite usar regex para los paths
 spec:
   rules:
     - host: posts.com
@@ -38,5 +41,3 @@ spec:
                 name: client-srv
                 port:
                   number: 3000
-
-

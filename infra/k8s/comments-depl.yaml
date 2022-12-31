@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: comments
-          image: gustavocondezo/micro-comments
+          image: gustavocondezo/comments
 
 #Para agregar otro objecto de kubernets con triple guion (sino puede ser otro archivo)
 #agregamos un despliegue de tipo servicio

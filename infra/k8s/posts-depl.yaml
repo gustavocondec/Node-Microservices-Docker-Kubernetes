@@ -15,21 +15,21 @@ spec: # definir comportamiento del deployment
     spec:
       containers:
         - name: posts
-          image: gustavocondezo/micro-posts
-#---
-#---
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: posts-clusterip-srv
-#spec:
-#  selector:
-#    app: posts
-#  type: ClusterIP #Si no se pone sera x defecto ClusterIP
-#  #ClusterIP PERMITE QUE SE CONECTEN ENTRE PODS
-#  #NodePort permite que el puerto este disponible fuera
-#  ports:
-#    - name: posts
-#      protocol: TCP
-#      port: 4000
-#      targetPort: 4000
+          image: gustavocondezo/posts
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-srv
+spec:
+  selector:
+    app: posts
+  type: ClusterIP #Si no se pone sera x defecto ClusterIP
+  #ClusterIP PERMITE QUE SE CONECTEN ENTRE PODS
+  #NodePort permite que el puerto este disponible fuera
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

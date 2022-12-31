@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: moderation
-          image: gustavocondezo/micro-moderation
+          image: gustavocondezo/moderation
 
 #Para agregar otro objecto de kubernets con triple guion (sino puede ser otro archivo)
 #agregamos un despliegue de tipo servicio
