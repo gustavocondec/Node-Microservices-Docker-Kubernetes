@@ -1,22 +1,25 @@
+#Skaffold se ejecuta fuera del Cluster de Kubernetes
+#Skaffold permite tener un buen ambiente de desarrollo con kubernetes, haciendolos editable
 apiVersion: skaffold/v2alpha3
 kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./infra/k8s/*
+      - ./infra/k8s/* #Le indicamos a skaffold que supervise los archivos de la carpeta, y si hay cambios que los aplique al cluster
+                      # Cada que iniciemos, detengamos skaffold, este iniciara, elimnara los objetos creados a partir de esta carpeta
 build:
   local:
-    push: false
-  artifacts: #hacemos que skaffold este pendiente de los cambios de los *.js y actualize los contenedores
-    - image: gustavocondezo/micro-client
+    push: false #False para evitar que skaffold envie las imagenes de docker a docker hub cada que se actualiza o construye una imagen
+  artifacts: #hacemos que skaffold este pendiente de los cambios de los *.js y los actualize en los contenedores(pods)
+    - image: gustavocondezo/client
       context: client #indicar que un pod esta ejecutando codigo de esta carpeta
       docker:
         dockerfile: Dockerfile
-      sync: #Si detecta cambios en la carpeta (.js)  entonces los copia al pod. En caso cambien otros archivos como pakage reconstruira
+      sync: #Si detecta cambios en la carpeta (.js)  entonces los copia al pod. En caso cambien otros archivos (que no estan en esta ruta) como pakage.json reconstruira la imagen para el pod(actualiza el deployment asocaido)
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: gustavocondezo/micro-comments
+    - image: gustavocondezo/comments
       context: comments #indicar que un pod esta ejecutando codigo de esta carpeta
       docker:
         dockerfile: Dockerfile
@@ -24,7 +27,7 @@ build:
         manual:
           - src: '*.js'
             dest: .
-    - image: gustavocondezo/micro-event-bus
+    - image: gustavocondezo/event-bus
       context: event-bus #indicar que un pod esta ejecutando codigo de esta carpeta
       docker:
         dockerfile: Dockerfile
@@ -32,7 +35,7 @@ build:
         manual:
           - src: '*.js'
             dest: .
-    - image: gustavocondezo/micro-moderation
+    - image: gustavocondezo/moderation
       context: moderation #indicar que un pod esta ejecutando codigo de esta carpeta
       docker:
         dockerfile: Dockerfile
@@ -40,7 +43,7 @@ build:
         manual:
           - src: '*.js'
             dest: .
-    - image: gustavocondezo/micro-posts
+    - image: gustavocondezo/posts
       context: posts #indicar que un pod esta ejecutando codigo de esta carpeta
       docker:
         dockerfile: Dockerfile
@@ -48,7 +51,7 @@ build:
         manual:
           - src: '*.js'
             dest: .
-    - image: gustavocondezo/micro-query
+    - image: gustavocondezo/query
       context: query #indicar que un pod esta ejecutando codigo de esta carpeta
       docker:
         dockerfile: Dockerfile
